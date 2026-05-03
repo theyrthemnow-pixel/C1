@@ -84,7 +84,6 @@
             border-radius: 2px; 
         }
 
-        /* Glass effect for the Oracle */
         .oracle-bg {
             background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
         }
@@ -105,14 +104,15 @@
             <div class="inline-block mt-4 bg-black text-white px-3 py-1 text-[10px] uppercase font-bold tracking-tighter">Issue #1: The Burnout Edition</div>
         </header>
 
-        <!-- STICKY TIMELINE -->
+        <!-- STICKY TIMELINE (Scrollable for 6 buttons) -->
         <nav class="mb-8 overflow-x-auto pb-4 -mx-4 px-4 sticky top-0 bg-[#F7F5F0]/95 backdrop-blur-sm z-40 py-3 border-b border-gray-300">
             <div class="flex gap-3 min-w-max">
-                <button data-time="2000" class="time-btn zine-border bg-white px-5 py-2 font-bold active-time text-sm uppercase">20:00</button>
-                <button data-time="2015" class="time-btn zine-border bg-white px-5 py-2 font-bold text-sm uppercase">20:15</button>
-                <button data-time="2030" class="time-btn zine-border bg-white px-5 py-2 font-bold text-sm uppercase">20:30</button>
-                <button data-time="2045" class="time-btn zine-border bg-white px-5 py-2 font-bold text-sm uppercase">20:45</button>
-                <button data-time="2100" class="time-btn zine-border bg-white px-5 py-2 font-bold text-sm uppercase">21:00+</button>
+                <button data-time="2000" class="time-btn zine-border bg-white px-4 py-2 font-bold active-time text-xs uppercase">20:00</button>
+                <button data-time="2015" class="time-btn zine-border bg-white px-4 py-2 font-bold text-xs uppercase">20:15</button>
+                <button data-time="2030" class="time-btn zine-border bg-white px-4 py-2 font-bold text-xs uppercase">20:30</button>
+                <button data-time="2040" class="time-btn zine-border bg-white px-4 py-2 font-bold text-xs uppercase">20:40</button>
+                <button data-time="2045" class="time-btn zine-border bg-white px-4 py-2 font-bold text-xs uppercase">20:45</button>
+                <button data-time="2100" class="time-btn zine-border bg-white px-4 py-2 font-bold text-xs uppercase">21:00+</button>
             </div>
         </nav>
 
@@ -147,12 +147,12 @@
                 </div>
             </section>
 
-            <!-- LOCAL LOGIC ORACLE (Alternative to External AI) -->
+            <!-- LOCAL LOGIC ORACLE -->
             <section class="zine-border p-6 border-purple-900 border-dashed oracle-bg">
                 <h3 class="text-xl font-bold mb-4 text-purple-900 flex items-center gap-2">
                     <span class="text-2xl">🔮</span> THE LOCAL ORACLE
                 </h3>
-                <p class="text-xs italic mb-4 text-purple-800">No API key. No cloud. Just raw, jaded Poble-sec logic based on your current metrics.</p>
+                <p class="text-xs italic mb-4 text-purple-800 text-center uppercase font-bold tracking-tight">No API key required. Logic based on your current metrics.</p>
                 
                 <div class="flex gap-2 mb-6">
                     <button onclick="consultOracle()" class="flex-1 bg-purple-900 text-white font-bold py-4 text-xs zine-border active:scale-95 transition-transform uppercase">
@@ -194,16 +194,22 @@
                 distractions: "🐦 Twitter Spiral", 
                 text: "<p>The movie was still playing and they went back to see the part of the film they loved the most. This movie is so fucking beautiful.</p><p>While they got lost in the scene, they looked at the clock. Fuck, it is 20:30 and I still haven't figured out what I will do. The phone buzzes. It's Mom asking about Sunday lunch.</p><p>'Chicken, talk tomorrow.' I am too distracted. They opened Twitter and spiraled into clips of abnormally large cocks. Not everyone has one, but they sure are the loudest on the timeline.</p>" 
             },
-            "2045": { 
+            "2040": { 
                 image: "Charlie4.png", 
+                stats: [40, 70, 0, 85], 
+                distractions: "🛁 Douche Drama | 🧴 Missing Lube", 
+                text: "<p>Okay, gurl, get in the shower! Oh, wait. The douche! Panic. Where was the bulb? I do not want a 'douche drama,' or I’ll never leave the house. It wasn't in the shower.</p><p>And where was the fucking lube? Charlie was allergic to most brands, so they had a specific one that always seemed to go missing. They stomped around the flat, naked, complaining and crying to themselves, hating the process.</p><p>They finally found the bulb and the lube behind the computer on the desk. 'Who put that there, you dumb bitch?' They were in a foul mood now, but they’d gone through the trouble of finding the gear, so they might as well clean out.</p>" 
+            },
+            "2045": { 
+                image: "Charlie5.png", 
                 stats: [50, 85, 0, 80], 
-                distractions: "🪞 Mirror Talk | 🚿 Missing Bulb", 
-                text: "<p>They stripped off their clothes and caught themselves in the mirror. 'I am a fat gurl. So fat. No one will want this. I should have cut my hair yesterday.'</p><p>They turned around. At least the ass was fat, too—fat and juicy. They couldn't deny that. A tingle hit their cock. 'Okay, gurl, get in the shower. Shower! Oh, wait. The douche.'</p><p>They find the bulb and the lube behind the computer on the desk. 'Who put that there, you dumb bitch?' They were in a foul mood now, but they'd gone through the trouble, so they might as well clean out.</p>" 
+                distractions: "🪞 Mirror Talk | 💇 Hair Regrets", 
+                text: "<p>They stripped off their clothes and caught themselves in the mirror. 'I am a fat gurl. So fat. No one will want this. I should have cut my hair yesterday.'</p><p>They turned around. At least the ass was fat, too—fat and juicy. They couldn't deny that. A tingle hit their cock. They stayed there, caught in the reflection, wondering if it was worth the effort of getting dressed again.</p>" 
             },
             "2100": { 
-                image: "Charlie5.png", 
+                image: "Charlie6.png", 
                 stats: [10, 20, 0, 100], 
-                distractions: " Couch Surrender", 
+                distractions: "🛋️ Couch Surrender", 
                 text: "<p>As the water trickled out, they decided they were clean. 'Gurl, your hole is good to go.' They started singing a problematic pop song and heading into the shower.</p><p>The hot water felt too good. They enjoyed the shower too much and too long. When they finally stepped out, it was well past 21:00.</p><p>'Gurl, what are we gonna do? I hate that I cleaned out for nothing.' Charlie sat back down on the couch, completely naked, and kept watching the movie...</p>" 
             }
         };
@@ -212,7 +218,7 @@
             horny: ["Gurl, the dildos in the nightstand are calling. Don't pretend you haven't thought about it.", "Go to the club. The cold tiles of the fridge won't love you back.", "Silicon skin vs. warm skin. You're clean now, don't waste the prep."],
             anxiety: ["Breathe. The mirror is lying. That ass is juicy and you know it.", "It's just a douche drama. We all go through it. Stop crying and find the lube.", "The five-year plan can wait until you've had a burrito. Calm down."],
             battery: ["The social battery is dead. Just stay on the couch and watch the cinematography.", "Stephen can wait. Mom can wait. Your sister already knows you're not going out.", "If you need coffee to fuck, you're already too tired to enjoy it."],
-            distraction: ["Close Twitter. Those cocks aren't real, they're just pixels and bad lighting.", "The pizza is a trap. If you eat it, you're committed to the sofa.", "Stop looking at that pizza.  You're just procrastinating on your own desire."]
+            distraction: ["Close Twitter. Those cocks aren't real, they're just pixels and bad lighting.", "The pizza is a trap. If you eat it, you're committed to the sofa.", "Stop cleaning the kitchen. You're just procrastinating on your own desire."]
         };
 
         const ctx = document.getElementById('stateChart').getContext('2d');
@@ -243,7 +249,6 @@
             }
         });
 
-        // Safe error handler that doesn't wipe the element
         window.handleImageError = function(img) {
             img.classList.add('hidden');
             const label = document.getElementById('image-placeholder-label');
@@ -266,7 +271,6 @@
                 narrative.classList.add('fade-out');
                 
                 setTimeout(() => {
-                    // Reset image states before changing src
                     img.classList.remove('hidden');
                     if (label) label.classList.add('hidden');
                     
