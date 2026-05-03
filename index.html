@@ -74,6 +74,7 @@
             width: 100%; 
             height: 100%; 
             object-fit: cover; 
+            transition: opacity 0.2s ease-in-out;
         }
         
         .fade-out { opacity: 0; }
@@ -87,6 +88,19 @@
         .oracle-bg {
             background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
         }
+
+        /* Subtle loading spinner for images */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #A89B9D;
+            border-top: 2px solid #2D2D2D;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            position: absolute;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         @media (max-width: 640px) { 
             #narrative-display { 
@@ -104,7 +118,7 @@
             <div class="inline-block mt-4 bg-black text-white px-3 py-1 text-[10px] uppercase font-bold tracking-tighter">Issue #1: The Burnout Edition</div>
         </header>
 
-        <!-- STICKY TIMELINE (Scrollable for 6 buttons) -->
+        <!-- STICKY TIMELINE -->
         <nav class="mb-8 overflow-x-auto pb-4 -mx-4 px-4 sticky top-0 bg-[#F7F5F0]/95 backdrop-blur-sm z-40 py-3 border-b border-gray-300">
             <div class="flex gap-3 min-w-max">
                 <button data-time="2000" class="time-btn zine-border bg-white px-4 py-2 font-bold active-time text-xs uppercase">20:00</button>
@@ -121,8 +135,9 @@
             <section class="zine-border bg-[#FDFCFA] p-6 sm:p-8 relative min-h-[400px]">
                 <div class="absolute -top-3 left-6 bg-black text-white px-3 py-1 text-xs font-bold tracking-widest uppercase z-10" id="time-display">20:00</div>
                 
-                <div class="image-container">
-                    <img id="current-image" src="Charlie1.png" alt="Charlie at 20:00" onerror="handleImageError(this)">
+                <div class="image-container" id="img-container">
+                    <div class="spinner" id="image-spinner"></div>
+                    <img id="current-image" src="Charlie1.png" alt="Charlie at 20:00" onload="document.getElementById('image-spinner').classList.add('hidden')" onerror="handleImageError(this)">
                     <span id="image-placeholder-label" class="hidden text-xs text-gray-400 font-bold uppercase text-center px-4">Image Missing</span>
                 </div>
 
@@ -176,43 +191,20 @@
 
     <script>
         const storyData = {
-            "2000": { 
-                image: "Charlie1.png", 
-                stats: [85, 40, 10, 30], 
-                distractions: "📱 Stephen's Voice Note", 
-                text: "<p>Charlie was horny but they were frozen and confused. A horny nonbinary 27-year-old realizing it has been a few weeks since they had dick.</p><p>They have been taking their PrEP daily—a ritual of readiness—but haven't even kissed a guy in weeks. They were starting to panic about going out.</p><p>They went to a queer meetup and met some fun people, but the 'social battery' was currently flashing red. They were debating if a night stoned on the sofa eating pizza was a better substitute for sex and less effort.</p>" 
-            },
-            "2015": { 
-                image: "Charlie2.png", 
-                stats: [75, 50, 5, 60], 
-                distractions: "🎬 The Movie | 🍕 4-Cheese Pizza", 
-                text: "<p>They got up to the kitchen to get some water and continued debating: cock or couch. Another message from their sister. A smiley face reaction will do.</p><p>They had no energy for more. How will I find the energy to fuck? Maybe I can have some coffee, they thought. Hmmm. If I have coffee now, I won't sleep until late.</p><p>They opened the fridge and saw the pizza: 33 cm, 4 cheese. If I eat this I won't be able to get fucked. Will I? I won't shit it out for a while, so maybe I can still have the pizza?</p>" 
-            },
-            "2030": { 
-                image: "Charlie3.png", 
-                stats: [90, 60, 0, 95], 
-                distractions: "🐦 Twitter Spiral", 
-                text: "<p>The movie was still playing and they went back to see the part of the film they loved the most. This movie is so fucking beautiful.</p><p>While they got lost in the scene, they looked at the clock. Fuck, it is 20:30 and I still haven't figured out what I will do. The phone buzzes. It's Mom asking about Sunday lunch.</p><p>'Chicken, talk tomorrow.' I am too distracted. They opened Twitter and spiraled into clips of abnormally large cocks. Not everyone has one, but they sure are the loudest on the timeline.</p>" 
-            },
-            "2040": { 
-                image: "Charlie4.png", 
-                stats: [40, 70, 0, 85], 
-                distractions: "🛁 Douche Drama | 🧴 Missing Lube", 
-                text: "<p>Okay, gurl, get in the shower! Oh, wait. The douche! Panic. Where was the bulb? I do not want a 'douche drama,' or I’ll never leave the house. It wasn't in the shower.</p><p>And where was the fucking lube? Charlie was allergic to most brands, so they had a specific one that always seemed to go missing. They stomped around the flat, naked, complaining and crying to themselves, hating the process.</p><p>They finally found the bulb and the lube behind the computer on the desk. 'Who put that there, you dumb bitch?' They were in a foul mood now, but they’d gone through the trouble of finding the gear, so they might as well clean out.</p>" 
-            },
-            "2045": { 
-                image: "Charlie5.png", 
-                stats: [50, 85, 0, 80], 
-                distractions: "🪞 Mirror Talk | 💇 Hair Regrets", 
-                text: "<p>They stripped off their clothes and caught themselves in the mirror. 'I am a fat gurl. So fat. No one will want this. I should have cut my hair yesterday.'</p><p>They turned around. At least the ass was fat, too—fat and juicy. They couldn't deny that. A tingle hit their cock. They stayed there, caught in the reflection, wondering if it was worth the effort of getting dressed again.</p>" 
-            },
-            "2100": { 
-                image: "Charlie6.png", 
-                stats: [10, 20, 0, 100], 
-                distractions: "🛋️ Couch Surrender", 
-                text: "<p>As the water trickled out, they decided they were clean. 'Gurl, your hole is good to go.' They started singing a problematic pop song and heading into the shower.</p><p>The hot water felt too good. They enjoyed the shower too much and too long. When they finally stepped out, it was well past 21:00.</p><p>'Gurl, what are we gonna do? I hate that I cleaned out for nothing.' Charlie sat back down on the couch, completely naked, and kept watching the movie...</p>" 
-            }
+            "2000": { image: "Charlie1.png", stats: [85, 40, 10, 30], distractions: "📱 Stephen's Voice Note", text: "<p>Charlie was horny but they were frozen and confused. A horny nonbinary 27-year-old realizing it has been a few weeks since they had dick.</p><p>They have been taking their PrEP daily—a ritual of readiness—but haven't even kissed a guy in weeks. They were starting to panic about going out.</p><p>They went to a queer meetup and met some fun people, but the 'social battery' was currently flashing red. They were debating if a night stoned on the sofa eating pizza was a better substitute for sex and less effort.</p>" },
+            "2015": { image: "Charlie2.png", stats: [75, 50, 5, 60], distractions: "🎬 The Movie | 🍕 4-Cheese Pizza", text: "<p>They got up to the kitchen to get some water and continued debating: cock or couch. Another message from their sister. A smiley face reaction will do.</p><p>They had no energy for more. How will I find the energy to fuck? Maybe I can have some coffee, they thought. Hmmm. If I have coffee now, I won't sleep until late.</p><p>They opened the fridge and saw the pizza: 33 cm, 4 cheese. If I eat this I won't be able to get fucked. Will I? I won't shit it out for a while, so maybe I can still have the pizza?</p>" },
+            "2030": { image: "Charlie3.png", stats: [90, 60, 0, 95], distractions: "🐦 Twitter Spiral", text: "<p>The movie was still playing and they went back to see the part of the film they loved the most. This movie is so fucking beautiful.</p><p>While they got lost in the scene, they looked at the clock. Fuck, it is 20:30 and I still haven't figured out what I will do. The phone buzzes. It's Mom asking about Sunday lunch.</p><p>'Chicken, talk tomorrow.' I am too distracted. They opened Twitter and spiraled into clips of abnormally large cocks. Not everyone has one, but they sure are the loudest on the timeline.</p>" },
+            "2040": { image: "Charlie4.png", stats: [40, 70, 0, 85], distractions: "🛁 Douche Drama | 🧴 Missing Lube", text: "<p>Okay, gurl, get in the shower! Oh, wait. The douche! Panic. Where was the bulb? I do not want a 'douche drama,' or I’ll never leave the house. It wasn't in the shower.</p><p>And where was the fucking lube? Charlie was allergic to most brands, so they had a specific one that always seemed to go missing. They stomped around the flat, naked, complaining and crying to themselves, hating the process.</p><p>They finally found the bulb and the lube behind the computer on the desk. 'Who put that there, you dumb bitch?' They were in a foul mood now, but they’d gone through the trouble of finding the gear, so they might as well clean out.</p>" },
+            "2045": { image: "Charlie5.png", stats: [50, 85, 0, 80], distractions: "🪞 Mirror Talk | 💇 Hair Regrets", text: "<p>They stripped off their clothes and caught themselves in the mirror. 'I am a fat gurl. So fat. No one will want this. I should have cut my hair yesterday.'</p><p>They turned around. At least the ass was fat, too—fat and juicy. They couldn't deny that. A tingle hit their cock. They stayed there, caught in the reflection, wondering if it was worth the effort of getting dressed again.</p>" },
+            "2100": { image: "Charlie6.png", stats: [10, 20, 0, 100], distractions: " Couch Surrender", text: "<p>As the water trickled out, they decided they were clean. 'Gurl, your hole is good to go.' They started singing a problematic pop song and heading into the shower.</p><p>The hot water felt too good. They enjoyed the shower too much and too long. When they finally stepped out, it was well past 21:00.</p><p>'Gurl, what are we gonna do? I hate that I cleaned out for nothing.' Charlie sat back down on the couch, completely naked, and kept watching the movie...</p>" }
         };
+
+        // --- PRELOADER SCRIPT ---
+        // This downloads all images in the background so they are ready instantly.
+        Object.values(storyData).forEach(data => {
+            const img = new Image();
+            img.src = data.image;
+        });
 
         const oracleWisdom = {
             horny: ["Gurl, the dildos in the nightstand are calling. Don't pretend you haven't thought about it.", "Go to the club. The cold tiles of the fridge won't love you back.", "Silicon skin vs. warm skin. You're clean now, don't waste the prep."],
@@ -251,6 +243,7 @@
 
         window.handleImageError = function(img) {
             img.classList.add('hidden');
+            document.getElementById('image-spinner').classList.add('hidden');
             const label = document.getElementById('image-placeholder-label');
             if (label) {
                 label.innerText = img.alt || "Image Pending";
@@ -267,8 +260,11 @@
                 const narrative = document.getElementById('narrative-display');
                 const img = document.getElementById('current-image');
                 const label = document.getElementById('image-placeholder-label');
+                const spinner = document.getElementById('image-spinner');
                 
                 narrative.classList.add('fade-out');
+                img.classList.add('fade-out');
+                spinner.classList.remove('hidden');
                 
                 setTimeout(() => {
                     img.classList.remove('hidden');
@@ -282,7 +278,9 @@
                     narrative.innerHTML = data.text;
                     radarChart.data.datasets[0].data = data.stats;
                     radarChart.update();
+                    
                     narrative.classList.remove('fade-out');
+                    img.classList.remove('fade-out');
                 }, 150);
                 
                 document.getElementById('oracle-response-box').classList.add('hidden');
@@ -292,16 +290,13 @@
         window.consultOracle = function() {
             const stats = radarChart.data.datasets[0].data;
             const labels = ['horny', 'anxiety', 'battery', 'distraction'];
-            
             let maxIndex = 0;
             for(let i=1; i<stats.length; i++) {
                 if(stats[i] > stats[maxIndex]) maxIndex = i;
             }
-            
             const category = labels[maxIndex];
             const choices = oracleWisdom[category];
             const wisdom = choices[Math.floor(Math.random() * choices.length)];
-            
             const box = document.getElementById('oracle-response-box');
             document.getElementById('oracle-content').innerHTML = `<strong>ORACLE:</strong> ${wisdom}`;
             box.classList.remove('hidden');
